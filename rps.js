@@ -1,5 +1,4 @@
 /* Rock paper scissor */
-let para = document.querySelector(".outcome");
 
 function getComputerChoice() {
     let randomnumber = Math.random()
@@ -18,7 +17,7 @@ function getHumanChoice() {
     return choice.toLowerCase();
 }
 
-function playGame() {
+function playGame(hmnchoice) {
     let humanScore = 0;
     let computerScore = 0;
     let draw = 0;
@@ -72,11 +71,14 @@ function playGame() {
 
     }
 
-    for (let i = 0; i < 5; i++) {
-        playRound(getHumanChoice(), getComputerChoice());
-    }
+    playRound(hmnchoice.toLowerCase(), getComputerChoice());
 
-    para.textContent = `Human: ${humanScore} Computer: ${computerScore} Draws: ${draw}`
 }
 
-playGame();
+const buttons = document.querySelectorAll("button");
+buttons.forEach((item) => {
+    item.addEventListener("click", (e) => {
+        const humanChoice = item.textContent.toLowerCase();
+        playGame(item.id)
+    })
+})
