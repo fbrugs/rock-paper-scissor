@@ -12,73 +12,67 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    const choice = prompt("Rock, Paper or Scissors?")
-    return choice.toLowerCase();
-}
-
-function playGame(hmnchoice) {
-    let humanScore = 0;
-    let computerScore = 0;
-    let draw = 0;
-
-    function playRound(humanChoice, computerChoice) {
-        /* console.log(`human: ${humanChoice} computer: ${computerChoice}`);   << ------ USED FOR DEBUGGING EARLY STAGES */
-        switch (humanChoice) {
-            case "rock":
-                if (computerChoice === "rock") {
-                    console.log("Draw!");
-                    draw += 1;
-                } else if (computerChoice === "scissors") {
-                    console.log("You won, rock beats scissors!");
-                    humanScore += 1;
-                } else {
-                    console.log(`You lost, ${computerChoice} beats rock!`);
-                    computerScore += 1;
-                }
-                break;
-
-            case "paper":
-                if (computerChoice === "paper") {
-                    console.log("Draw!");
-                    draw += 1;
-                } else if (computerChoice === "rock") {
-                    console.log("You won, paper beats rock!");
-                    humanScore += 1;
-                } else {
-                    console.log(`You lost, ${computerChoice} beats paper!`);
-                    computerScore += 1;
-                }
-                break;
-
-            case "scissors":
-                if (computerChoice === "scissors") {
-                    console.log("Draw!");
-                    draw += 1;
-                } else if (computerChoice === "paper") {
-                    console.log("You won, scissors beats paper!");
-                    humanScore += 1;
-                } else {
-                    console.log(`You lost, ${computerChoice} beats scissors!`);
-                    computerScore += 1; 
-                }
-                break;
-            
-            default:
-                console.log(`${humanChoice} is not an option!`)
-                break;
-        }
-
+function playRound(humanChoice, computerChoice) {
+    switch (humanChoice) {
+        case "rock":
+            if (computerChoice === "rock") {
+                draw += 1;
+            } else if (computerChoice === "scissors") {
+                humanScore += 1;
+            } else {
+                computerScore += 1;
+            }
+            break;
+        case "paper":
+            if (computerChoice === "paper") {
+                draw += 1;
+            } else if (computerChoice === "rock") {
+                humanScore += 1;
+            } else {
+                computerScore += 1;
+            }
+            break;
+        case "scissors":
+            if (computerChoice === "scissors") {
+                draw += 1;
+            } else if (computerChoice === "paper") {
+                humanScore += 1;
+            } else {
+                computerScore += 1;
+            }
+            break;
     }
-
-    playRound(hmnchoice.toLowerCase(), getComputerChoice());
-
 }
 
-const buttons = document.querySelectorAll("button");
+let humanScore = 0;
+let computerScore = 0;
+let draw = 0;
+let round = 0;
+
+const buttons = document.querySelectorAll(".play-button");
+
 buttons.forEach((item) => {
     item.addEventListener("click", (e) => {
-        const humanChoice = item.textContent.toLowerCase();
-        playGame(item.id)
+        round += 1;
+        playRound(item.id, getComputerChoice())
+
+        const result = document.querySelector(".result")
+
+        result.textContent = `Human: ${humanScore} Computer: ${computerScore} Draws: ${draw}`
+        console.log(round)
+
+        if (round === 5) {
+            if (humanScore > computerScore) {
+                result.textContent = `You won!`
+            } else if (computerScore > humanScore) {
+                result.textContent = `You lost!`
+            } else if (humanScore === computerScore) {
+                result.textContent = `It's a draw!`
+            }
+            round = draw = humanScore = computerScore = 0;
+        }
+
     })
 })
+
+/* Draw is counted but not used in this version */

@@ -6,4 +6,15 @@ button {
 .container {
     display: flex;
     gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.result {
+    font-weight: bold;
+    text-align: center;
+}
+
+p {
+    text-align: center;
 }
