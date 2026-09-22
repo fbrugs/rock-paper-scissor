@@ -53,23 +53,26 @@ const buttons = document.querySelectorAll(".play-button");
 
 buttons.forEach((item) => {
     item.addEventListener("click", (e) => {
+        const result = document.querySelector(".result");
+        const winner = document.querySelector(".winner");
+
+        winner.textContent = "";
         round += 1;
         playRound(item.id, getComputerChoice())
-
-        const result = document.querySelector(".result")
 
         result.textContent = `Human: ${humanScore} Computer: ${computerScore} Draws: ${draw}`
         console.log(round)
 
         if (round === 5) {
             if (humanScore > computerScore) {
-                result.textContent = `You won!`
+                winner.textContent = `You won!`
             } else if (computerScore > humanScore) {
-                result.textContent = `You lost!`
+                winner.textContent = `You lost!`
             } else if (humanScore === computerScore) {
-                result.textContent = `It's a draw!`
+                winner.textContent = `It's a draw!`
             }
             round = draw = humanScore = computerScore = 0;
+            result.textContent = `Human: ${humanScore} Computer: ${computerScore} Draws: ${draw}`
         }
 
     })
